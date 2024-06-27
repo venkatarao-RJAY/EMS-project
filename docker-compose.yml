@@ -1,0 +1,94 @@
+version: '3.8'
+services:
+  eureka-server:
+    image: eureka:latest
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - eka-net
+
+  gateway:
+    image: gateway:latest
+    container_name: ekagateway
+    ports:
+      - "2030:2030"
+    depends_on:
+      - eureka-server
+    networks:
+      - eka-net
+
+  admin:
+    image: admin:latest
+    container_name: admin
+    ports:
+      - "2022:2022"
+    depends_on:
+      - eureka-server
+    networks:
+      - eka-net
+
+  announcement:
+    image: announcement:latest
+    container_name: announcement
+    ports:
+      - "2020:2020"
+    depends_on:
+      - eureka-server
+    networks:
+      - eka-net
+
+  attendance:
+    image: attendence:latest
+    container_name: attendance
+    ports:
+      - "1998:1998"
+    depends_on:
+      - eureka-server
+    networks:
+      - eka-net
+
+  auth:
+    image: authservice:latest
+    container_name: auth
+    ports:
+      - "2055:2055"
+    depends_on:
+      - eureka-server
+    networks:
+      - eka-net
+
+  documents:
+    image: document:latest
+    container_name: documents
+    ports:
+      - "9999:9999"
+    depends_on:
+      - eureka-server
+    networks:
+      - eka-net
+
+  payment:
+    image: payment:latest
+    container_name: payment
+    ports:
+      - "2025:2025"
+    depends_on:
+      - eureka-server
+    networks:
+      - eka-net
+
+  request:
+    image: requestandcomplaints:latest
+    container_name: request
+    ports:
+      - "2021:2021"
+    depends_on:
+      - eureka-server
+    networks:
+      - eka-net
+
+networks:
+  eka-net:
+    driver: bridge
+
